@@ -5,6 +5,18 @@ import { signIn } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 
+const fieldStyle: React.CSSProperties = {
+  background: "transparent",
+  border: "none",
+  borderBottom: "1px solid rgba(153,144,124,0.4)",
+  padding: "0.75rem 0",
+  color: "#e5e2e1",
+  fontSize: "14px",
+  outline: "none",
+  width: "100%",
+  transition: "border-color 0.3s",
+};
+
 function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -16,82 +28,58 @@ function LoginForm() {
     e.preventDefault();
     setError("");
     setLoading(true);
-
     const form = e.currentTarget;
-    const email = (form.elements.namedItem("email") as HTMLInputElement).value;
-    const password = (form.elements.namedItem("password") as HTMLInputElement).value;
 
     const result = await signIn("credentials", {
-      email,
-      password,
+      email: (form.elements.namedItem("email") as HTMLInputElement).value,
+      password: (form.elements.namedItem("password") as HTMLInputElement).value,
       redirect: false,
     });
 
     setLoading(false);
-
-    if (result?.error) {
-      setError("Invalid email or password");
-      return;
-    }
-
+    if (result?.error) { setError("Invalid email or password"); return; }
     router.push("/dashboard");
     router.refresh();
   }
 
   return (
-    <div className="bg-white rounded-2xl shadow-md p-8">
-      <h1 className="text-2xl font-bold text-gray-900 mb-6 text-center">
-        Log in to Ayeye
-      </h1>
+    <div className="p-8 border" style={{ borderColor: "rgba(77,70,53,0.5)", background: "#1c1b1b" }}>
+      <div className="mb-8">
+        <span className="label-caps block mb-2" style={{ color: "#f2ca50" }}>Welcome Back</span>
+        <h1 style={{ fontFamily: "var(--font-noto-serif)", fontSize: "36px", fontWeight: 400, color: "#e5e2e1" }}>
+          Sign In
+        </h1>
+      </div>
 
       {registered && (
-        <p className="mb-4 text-center text-sm text-green-600 bg-green-50 rounded-lg py-2">
-          Account created! Please log in.
-        </p>
+        <div className="mb-6 p-4 border-l-2" style={{ borderColor: "#f2ca50", background: "rgba(242,202,80,0.05)" }}>
+          <p className="label-caps" style={{ color: "#f2ca50", fontSize: "10px" }}>Account created — please sign in.</p>
+        </div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-8">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Email
-          </label>
-          <input
-            name="email"
-            type="email"
-            required
-            className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
+          <label className="label-caps block mb-2" style={{ color: "rgba(208,197,175,0.5)", fontSize: "10px" }}>Email Address</label>
+          <input name="email" type="email" required style={fieldStyle} />
+        </div>
+        <div>
+          <label className="label-caps block mb-2" style={{ color: "rgba(208,197,175,0.5)", fontSize: "10px" }}>Password</label>
+          <input name="password" type="password" required style={fieldStyle} />
         </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Password
-          </label>
-          <input
-            name="password"
-            type="password"
-            required
-            className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-        </div>
+        {error && <p className="label-caps" style={{ color: "#ffb4ab", fontSize: "10px" }}>{error}</p>}
 
-        {error && (
-          <p className="text-red-600 text-sm text-center">{error}</p>
-        )}
-
-        <button
-          type="submit"
-          disabled={loading}
-          className="w-full bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-semibold py-2 rounded-lg transition"
-        >
-          {loading ? "Logging in…" : "Log in"}
+        <button type="submit" disabled={loading}
+          className="label-caps w-full py-4 transition-all hover:opacity-90 disabled:opacity-40"
+          style={{ background: "#f2ca50", color: "#3c2f00", letterSpacing: "0.15em" }}>
+          {loading ? "Signing in…" : "Sign In"}
         </button>
       </form>
 
-      <p className="mt-4 text-center text-sm text-gray-500">
-        Don&apos;t have an account?{" "}
-        <Link href="/register" className="text-blue-600 hover:underline">
-          Sign up
+      <p className="mt-8 label-caps" style={{ color: "rgba(208,197,175,0.5)", fontSize: "10px" }}>
+        No account?{" "}
+        <Link href="/register" className="transition-colors" style={{ color: "#f2ca50", borderBottom: "1px solid #f2ca50" }}>
+          Create one
         </Link>
       </p>
     </div>

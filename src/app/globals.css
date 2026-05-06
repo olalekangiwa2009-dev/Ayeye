@@ -1,26 +1,117 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  /* Aurelian Editorial colour palette */
+  --color-background:               #131313;
+  --color-surface:                  #131313;
+  --color-surface-dim:              #131313;
+  --color-surface-bright:           #393939;
+  --color-surface-container-lowest: #0e0e0e;
+  --color-surface-container-low:    #1c1b1b;
+  --color-surface-container:        #201f1f;
+  --color-surface-container-high:   #2a2a2a;
+  --color-surface-container-highest:#353534;
+  --color-surface-variant:          #353534;
+  --color-on-surface:               #e5e2e1;
+  --color-on-surface-variant:       #d0c5af;
+  --color-inverse-surface:          #e5e2e1;
+  --color-inverse-on-surface:       #313030;
+  --color-outline:                  #99907c;
+  --color-outline-variant:          #4d4635;
+  --color-primary:                  #f2ca50;
+  --color-on-primary:               #3c2f00;
+  --color-primary-container:        #d4af37;
+  --color-on-primary-container:     #554300;
+  --color-secondary:                #c8c8b0;
+  --color-on-secondary:             #303221;
+  --color-secondary-container:      #494a38;
+  --color-on-secondary-container:   #b9baa3;
+  --color-secondary-fixed:          #e4e4cc;
+  --color-secondary-fixed-dim:      #c8c8b0;
+  --color-on-secondary-fixed:       #1b1d0e;
+  --color-on-secondary-fixed-variant:#474836;
+  --color-tertiary:                 #f3ca50;
+  --color-tertiary-container:       #d5af37;
+  --color-error:                    #ffb4ab;
+  --color-on-error:                 #690005;
+  --color-error-container:          #93000a;
+  --color-surface-tint:             #e9c349;
+
+  /* Fonts */
+  --font-serif: var(--font-noto-serif), "Noto Serif", Georgia, serif;
+  --font-sans:  var(--font-inter), "Inter", system-ui, sans-serif;
+
+  /* Spacing */
+  --spacing-page:    5vw;
+  --spacing-section: 8rem;
+  --spacing-stack-sm: 0.5rem;
+  --spacing-stack-md: 1.5rem;
+  --spacing-stack-lg: 3rem;
+  --spacing-gutter:  2rem;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+* {
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  background-color: #131313;
+  color: #e5e2e1;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: #131313;
+  color: #e5e2e1;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
+
+/* Label caps utility */
+.label-caps {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+/* Material symbols */
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+}
+
+/* Masonry grid */
+.masonry-grid { column-count: 1; }
+@media (min-width: 768px)  { .masonry-grid { column-count: 2; column-gap: 2rem; } }
+@media (min-width: 1024px) { .masonry-grid { column-count: 3; column-gap: 2.5rem; } }
+.masonry-item { break-inside: avoid; margin-bottom: 2.5rem; }
+
+/* Masonry stagger — only on multi-column */
+.masonry-stagger { margin-top: 0; }
+@media (min-width: 768px) { .masonry-stagger { margin-top: var(--stagger, 0rem); } }
+
+/* Hide scrollbar for filter bar */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Gold underline input */
+.input-gold {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(242, 202, 80, 0.3);
+  padding: 0.75rem 0;
+  color: #e5e2e1;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  outline: none;
+  width: 100%;
+  transition: border-color 0.3s;
+}
+.input-gold::placeholder { color: rgba(229, 226, 225, 0.35); }
+.input-gold:focus { border-bottom-color: #f2ca50; }
