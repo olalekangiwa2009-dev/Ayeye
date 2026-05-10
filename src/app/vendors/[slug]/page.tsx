@@ -66,7 +66,8 @@ export default async function VendorProfilePage({ params }: { params: Promise<{ 
 
   if (!vendor) notFound();
 
-  const portfolio: string[] = JSON.parse(vendor.portfolio || "[]");
+  let portfolio: string[] = [];
+  try { portfolio = JSON.parse(vendor.portfolio || "[]"); } catch { portfolio = []; }
   const isCelebrant = session?.user.role === "CELEBRANT";
   const isOwnProfile = session?.user.role === "VENDOR" &&
     (await prisma.vendorProfile.findUnique({ where: { userId: session.user.id } }))?.id === vendor.id;
@@ -206,7 +207,8 @@ export default async function VendorProfilePage({ params }: { params: Promise<{ 
               ) : (
                 <div className="space-y-px">
                   {vendor.services.map((s) => {
-                    const serviceImages: string[] = JSON.parse(s.images || "[]");
+                    let serviceImages: string[] = [];
+                    try { serviceImages = JSON.parse(s.images || "[]"); } catch { serviceImages = []; }
                     return (
                       <div key={s.id} className="border-t" style={{ borderColor: "rgba(77,70,53,0.4)" }}>
                         {serviceImages.length > 0 && (

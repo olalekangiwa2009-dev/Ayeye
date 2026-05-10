@@ -56,6 +56,10 @@ export async function PUT(req: Request) {
   try {
     const { businessName, category, location, bio, coverImage, portfolio, instagram, website } = await req.json();
 
+    if (!businessName || !category || !location || !bio) {
+      return NextResponse.json({ error: "All fields are required" }, { status: 400 });
+    }
+
     const profile = await prisma.vendorProfile.update({
       where: { userId: session.user.id },
       data: {

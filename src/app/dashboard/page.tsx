@@ -74,7 +74,7 @@ export default async function DashboardPage() {
               {isVendor ? "Vendor" : "Celebrant"} Account
             </span>
             <h1 style={{ fontFamily: "var(--font-noto-serif)", fontSize: "clamp(32px,4vw,56px)", fontWeight: 400, color: "#e5e2e1", lineHeight: 1.1 }}>
-              Welcome back,<br />{session.user?.name?.split(" ")[0]}.
+              Welcome back,<br />{session.user?.name?.split(" ")[0] ?? session.user?.email?.split("@")[0]}.
             </h1>
             <p className="mt-3 text-sm" style={{ color: "rgba(208,197,175,0.6)" }}>{session.user?.email}</p>
           </div>
