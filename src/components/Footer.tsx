@@ -9,7 +9,7 @@ export default function Footer() {
             AYEYE
           </div>
           <p className="text-sm leading-relaxed max-w-xs" style={{ color: "#474836" }}>
-            The art of celebration. Connecting Nigeria's most distinguished celebrants with verified event artisans.
+            The art of celebration. Connecting Nigeria&apos;s most distinguished celebrants with verified event artisans.
           </p>
         </div>
 

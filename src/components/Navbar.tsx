@@ -23,7 +23,10 @@ export default function Navbar({ session }: Props) {
   const [open, setOpen] = useState(false);
 
   // Close menu on route change
-  useEffect(() => { setOpen(false); }, [path]);
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setOpen(false);
+  }, [path]);
   // Prevent body scroll when open
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";

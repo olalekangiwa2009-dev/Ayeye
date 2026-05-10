@@ -1,7 +1,16 @@
+import { config } from 'dotenv';
+config();
+
 import { PrismaClient } from "@prisma/client";
+import { PrismaPg } from "@prisma/adapter-pg";
 import { slugify } from "../src/lib/slugify";
 
-const prisma = new PrismaClient();
+function createPrismaClient() {
+  const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! });
+  return new PrismaClient({ adapter });
+}
+
+const prisma = createPrismaClient();
 
 async function main() {
   const vendors = await prisma.vendorProfile.findMany({
